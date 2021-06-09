@@ -16,9 +16,18 @@ S1 <- new("link",
           account_to = 45121,
           transaction=0.225,
           block_no=1,
-          hash_no = as.character(sha256("NoHashonBlock1")))
+          hash_no = as.character(sha256("TheFirstHashIsNotImportant")))
 
-Chain <- S1
+
+S2 <- new("link",
+          timestamp=Sys.time(),
+          account_from=74581, 
+          account_to = 96512,
+          transaction=1.526,
+          block_no=2,
+          hash_no = as.character(sha256("ThisShouldBeCalculatedByIamLazy")))
+
+Chain <- c(S1,S2)
 
 createtransction <- function(timestamp=Sys.time(),
                          account_from=0, 
@@ -29,7 +38,12 @@ createtransction <- function(timestamp=Sys.time(),
                       
                                     previous_hash <-  Chain[[length(Chain)]]@hash_no
                                     block_no =Chain[[length(Chain)]]@block_no+1
-                                    hash_no <- as.character(sha256(paste(as.character(timestamp),as.character(account_from),as.character(account_to),as.character(transaction),as.character(block_no),as.character(previous_hash))))
+                                    hash_no <- as.character(sha256(paste(as.character(timestamp),
+                                                                         as.character(account_from),
+                                                                         as.character(account_to),
+                                                                         as.character(transaction),
+                                                                         as.character(block_no),
+                                                                         as.character(previous_hash))))
                                     out <- new("link",timestamp=timestamp,account_from=account_from,account_to=account_to,transaction=transaction,block_no=block_no,hash_no=hash_no)
                                     Chain  <- c(Chain,out) 
                                     return(Chain)
