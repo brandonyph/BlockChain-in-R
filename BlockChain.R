@@ -30,14 +30,14 @@ S2 <- new("link",
 Chain <- c(S1,S2)
 
 createtransction <- function(timestamp=Sys.time(),
-                         account_from=0, 
-                         account_to=0,
-                         transaction=0,
-                         chain=Chain
+                         account_from, 
+                         account_to,
+                         transaction,
+                         Chain=Chain
                          ){
                       
                                     previous_hash <-  Chain[[length(Chain)]]@hash_no
-                                    block_no =Chain[[length(Chain)]]@block_no+1
+                                    block_no = Chain[[length(Chain)]]@block_no+1
                                     hash_no <- as.character(sha256(paste(as.character(timestamp),
                                                                          as.character(account_from),
                                                                          as.character(account_to),
@@ -50,8 +50,11 @@ createtransction <- function(timestamp=Sys.time(),
                                     }
 
 
-Chain<- createtransction(account_from=sample(1:99999,1), 
-                 account_to=sample(1:99999,1),
-                 transaction=runif(n=1, min=1e-3,max=.99))
+Chain <- createtransction(timestamp=Sys.time(),
+                          account_from = sample(1:99999,1), 
+                          account_to=sample(1:99999,1), 
+                          transaction=runif(n=1, min=1e-3,max=.99),
+                          Chain=Chain)
+
 
 
